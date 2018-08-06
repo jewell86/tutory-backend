@@ -1,6 +1,6 @@
 const { SECRET_KEY } = process.env
 const { sign, verify } = require('jsonwebtoken')
-const db = require('../db')
+const db = require('../../knex')
 
 function createToken (id) {
   const sub = { sub: { id } }

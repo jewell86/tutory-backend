@@ -1,5 +1,5 @@
 const { promisify } = require('util')
-const db = require('../db')
+const db = require('../../knex')
 const bcrypt = require('bcryptjs')
 
 //signup a user
