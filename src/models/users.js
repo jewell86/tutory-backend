@@ -13,6 +13,7 @@ async function create ({ password, ...body }) {
 
 //user login
 function login ({ username, password }) {
+    console.log(username, password)
   return db('users')
     .where({ username })
     .then(async ([ user ]) => {

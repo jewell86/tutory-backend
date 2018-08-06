@@ -12,7 +12,7 @@ app.use(require('cors')())
 
 app.use('/users', require('./routes/users'))
 app.use('/tutorials', require('./routes/tutorials'))
-app.use('/tutorials/:tutorialId/comments', require('./routes/comments'))
+// app.use('/tutorials/:tutorialId/comments', require('./routes/comments'))
 //Users, tutorials, user's added/saved tutorials (many-to-many), comments/reviews, teacher questions
 
 app.use((req, res, next) => {

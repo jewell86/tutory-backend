@@ -1,5 +1,5 @@
 const db = require('../db')
-const commentsModel = require('./comments')
+// const commentsModel = require('./comments')
 
 //get all tutorials from db w/o comments
 function getAll () {

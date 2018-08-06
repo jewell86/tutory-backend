@@ -1,7 +1,7 @@
 const model = require('../models/users')
 const auth = require('../lib/auth')
 
-async function signup (req, res, next) {
+async function signup(req, res, next) {
   try {
     const response = await model.create(req.body)
     const token = auth.createToken(response.id)
@@ -11,7 +11,7 @@ async function signup (req, res, next) {
   }
 }
 
-async function login (req, res, next) {
+async function login(req, res, next) {
   try {
     const response = await model.login(req.body)
     const token = auth.createToken(response.id)
@@ -22,30 +22,30 @@ async function login (req, res, next) {
 }
 
 //view another user's profile
-async function viewProfile (req, res, next) {
+async function viewProfile(req, res, next) {
   try {
     const userId = req.params.userId
     const response = await model.viewProfile(userId)
     res.json({ response })
   } catch (e) {
     next({ status: 404, error: `User not found` })
-  }  
+  }
 }
 
 //view personal profile
-async function myProfile (req, res, next) {
-  try {  
+async function myProfile(req, res, next) {
+  try {
     const userId = req.params.userId
     const response = await model.myProfile(userId)
     const token = auth.createToken(response.id)
     res.json({ token })
   } catch (e) {
     next({ status: 403, error: `Access forbidden` })
-  }  
+  }
 }
 
 //update personal profile
-async function update (req, res, next) {
+async function update(req, res, next) {
   try {
     const userId = req.params.userId
     const response = await model.update(userId)
