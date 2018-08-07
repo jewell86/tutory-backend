@@ -15,14 +15,28 @@ function getAll() {
 
 //get single tutorial from db w/ comments
 function getOne(id) {
+
   return db('tutorials')
-    .where({ id }).first()
+    .join('tutorials_contents', 'tutorials.id', 'tutorials_contents.tutorials_id')
+    .join('contents', 'contents.id', 'tutorials_contents.contents_id')
+    .select('tutorials.id', 'tutorials.users_id', 'tutorials.title', 'tutorials.description', 'contents.url', 'contents.img', 'tutorials.created_at', 'tutorials.updated_at')
+    .where('tutorials.id', id).first()
     .then(tutorial => {
       return commentsModel.getAll(id)
         .then(comments => {
           return { tutorial, comments }
         })
     })
+
+
+  // return db('tutorials')
+  //   .where({ id }).first()
+  //   .then(tutorial => {
+  //     return commentsModel.getAll(id)
+  //       .then(comments => {
+  //         return { tutorial, comments }
+  //       })
+  //   })
 }
 
 //find one tutorial w/o comments
