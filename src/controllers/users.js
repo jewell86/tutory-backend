@@ -33,12 +33,13 @@ async function viewProfile(req, res, next) {
 }
 
 //view personal profile
-async function myProfile(req, res, next) {
+async function myProfile(req, res, next) { // why is this returning a token??
   try {
     const userId = req.params.userId
     const response = await model.myProfile(userId)
-    const token = auth.createToken(response.id)
-    res.json({ token })
+    // const token = auth.createToken(response.id)
+    // res.json({ token })
+    res.json({ response })
   } catch (e) {
     next({ status: 403, error: `Access forbidden` })
   }
