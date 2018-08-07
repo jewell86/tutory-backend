@@ -1,4 +1,3 @@
-console.log('Seeding Users Tutorials')
 
 exports.seed = function(knex, Promise) {
   return knex('users_tutorials').insert([

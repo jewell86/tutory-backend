@@ -1,4 +1,4 @@
-console.log('Seeding Tutorials Ratings')
+console.log("Seeding Tutorial Ratings")
 
 exports.seed = function(knex, Promise) {
   return knex('tutorials_ratings').insert([
