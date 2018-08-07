@@ -2,7 +2,7 @@ const { promisify } = require('util')
 const db = require('../db')
 const bcrypt = require('bcryptjs')
 
-//signup a user
+// User Signup
 async function create ({ password, ...body }) {
     const hashed = await promisify(bcrypt.hash)(password, 8)
     return db('users')
@@ -11,7 +11,7 @@ async function create ({ password, ...body }) {
         .then(([response]) => response)
 }
 
-//user login
+// User Login
 function login ({ username, password }) {
   return db('users')
     .where({ username })
@@ -23,7 +23,7 @@ function login ({ username, password }) {
     })
 }
 
-//view another user's profile
+// View another's profile
 async function viewProfile (userId) {
   try {
     var [user] = await getUserById(userId)
@@ -37,7 +37,7 @@ async function viewProfile (userId) {
   }
 }
 
-//view personal profile - same as viewProfile but we might want to change it so I kept it
+// View my profile
 async function myProfile (userId) {
   try {
     var [user] = await getUserById(userId)
@@ -49,11 +49,10 @@ async function myProfile (userId) {
   }
 }
 
-//update personal user profile
+// Update my info
 async function update (userId, body) {
   try {
     var user = await myProfile(userId)
-    // console.log(user)
     await updateUser(user, body)
     return await myProfile(userId)
   } catch (e) {
@@ -84,9 +83,10 @@ function updateBodyObjectWithStaticUserInfo (user, body) {
   if (!body.first_name) body["first_name"] = user.first_name
   if (!body.last_name) body["last_name"] = user.last_name
   if (!body.about_me) body["about_me"] = user.about_me
-  if (Object.keys(body).includes("public")) body["public"] = body.public
   if (!body.created_at) body["created_at"] = user.created_at
+  if (Object.keys(body).includes("public")) body["public"] = body.public
   body["updated_at"] = new Date()
+  
   return body
 }
 

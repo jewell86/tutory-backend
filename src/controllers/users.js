@@ -21,7 +21,7 @@ async function login(req, res, next) {
   }
 }
 
-//view another user's profile
+// View another's profile
 async function viewProfile(req, res, next) {
   try {
     const userId = req.params.userId
@@ -32,8 +32,8 @@ async function viewProfile(req, res, next) {
   }
 }
 
-//view personal profile
-async function myProfile(req, res, next) { // why is this returning a token??
+// View my profile
+async function myProfile(req, res, next) {
   try {
     const userId = req.params.userId
     const response = await model.myProfile(userId)
@@ -45,7 +45,7 @@ async function myProfile(req, res, next) { // why is this returning a token??
   }
 }
 
-//update personal profile
+// Update my info
 async function update(req, res, next) {
   try {
     const userId = req.params.userId
