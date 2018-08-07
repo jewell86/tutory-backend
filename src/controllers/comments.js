@@ -1,10 +1,6 @@
 const model = require('../models/comments')
 const { parseToken } = require('../lib/auth')
 
-// function getAll() {
-//   return 1
-// }
-
 async function create(req, res, next) {
   try {
     const token = parseToken(req.headers.authorization)
@@ -18,7 +14,6 @@ async function create(req, res, next) {
   } catch (e) {
     console.error(e)
     next({ status: 400, message: 'Comment could not be created' })
-
   }
 
 }

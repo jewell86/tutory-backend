@@ -3,7 +3,6 @@ const db = require('../../knex')
 function getAll(tutorialId) {
   return db('comments')
     .where({ tutorials_id: tutorialId })
-    // .then(([response]) => response)
 }
 
 function create({userId, tutorialId, content}) {
