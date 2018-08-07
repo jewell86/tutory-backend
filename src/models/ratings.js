@@ -10,12 +10,13 @@ function avgRating(tutorialId) {
     .where({ tutorials_id: tutorialId })
     .avg('value')
     .first()
+}
 
+function create(tutorialId) {
 
-  // .avg('value')
-  //   .where({id: tutorialId})
 }
 
 module.exports = {
-  avgRating
+  avgRating,
+  create
 }

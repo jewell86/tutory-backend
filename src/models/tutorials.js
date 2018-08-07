@@ -21,8 +21,7 @@ function getOne(id) {
     .then(async tutorial => {
       const comments = await commentsModel.getAll(id)
       const rating = await ratingsModel.avgRating(id)
-      tutorial.avg_rating = rating.avg || 0
-      // console.log(ratings)
+      tutorial.avg_rating = rating ? rating.avg : null
       return { tutorial, comments }
     })
 }

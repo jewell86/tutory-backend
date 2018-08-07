@@ -13,7 +13,7 @@ async function create(req, res, next) {
 
   } catch (e) {
     console.error(e)
-    next({ status: 400, message: 'Comment could not be created' })
+    next({ status: 400, error: 'Comment could not be created' })
   }
 
 }
