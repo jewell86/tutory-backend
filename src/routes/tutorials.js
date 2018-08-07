@@ -10,6 +10,4 @@ router.get('/:tutorialId', ctrl.getOne) //show one tutorial on a page on click f
 router.post('/', auth.isLoggedIn, ctrl.create) //create a tutorial page
 router.patch('/:tutorialId', auth.isAuthorized, ctrl.update)//update a tutorial page
 router.delete('/:tutorialId', auth.isAuthorized, ctrl.destroy)//delete a tutorial page
-
 module.exports = router
-

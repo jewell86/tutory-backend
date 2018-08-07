@@ -20,7 +20,7 @@ function isLoggedIn (req, res, next) {
   } catch (e) {
     next({
       status: 401,
-      error: `Session has expired. Please login again.`
+      error: `Incorrect or missing token.`
     })
   }
 }
@@ -48,7 +48,7 @@ async function isAuthorized (req, res, next) {
   } catch (e) {
     next({
       status: 401,
-      error: `Session has expired. Please login again.`
+      error: `You are not authorized to access this route.`
     })
   }
 }
