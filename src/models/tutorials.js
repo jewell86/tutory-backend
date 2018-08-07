@@ -15,17 +15,36 @@ function getAll() {
 
 //get single tutorial from db w/ comments
 function getOne(id) {
-
   return db('tutorials')
-    .join('contents', 'contents.tutorials_id', 'tutorials.id')
-    .select('tutorials.id', 'tutorials.users_id', 'tutorials.title', 'tutorials.description', 'tutorials.img', 'contents.url', 'tutorials.created_at', 'tutorials.updated_at')
-    .where('tutorials.id', id).first()
-    .then(tutorial => {
-      return commentsModel.getAll(id)
-        .then(comments => {
-          return { tutorial, comments }
-        })
+    .select('id', 'users_id', 'title', 'description', 'img', 'created_at', 'updated_at')
+    .where({ id }).first()
+    .then(async tutorial => {
+      try {
+        var urls = await db('contents').select('url').where('contents.tutorials_id', id)
+        urls = urls.map(urlObj => urlObj = urlObj.url)
+        tutorial["urls"] = urls
+        return commentsModel.getAll(id)
+          .then(comments => {
+            return { tutorial, comments }
+          })
+      } catch (e) {
+        throw new Error(e)
+      }
     })
+}
+
+async function addURLsToTutorials (tutorial, id) {
+  try {
+    var urls = await db('contents').select('url').where('contents.tutorials_id', id)
+    urls = urls.map(urlObj => urlObj = urlObj.url)
+    tutorial["urls"] = urls
+    return commentsModel.getAll(id)
+      .then(comments => {
+        return { tutorial, comments }
+      })
+  } catch (e) {
+    throw new Error(e)
+  }
 }
 
 //find one tutorial w/o comments
