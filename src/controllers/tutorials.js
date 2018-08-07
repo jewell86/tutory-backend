@@ -8,8 +8,6 @@ async function getAll(req, res, next) {
 }
 
 async function getOne(req, res, next) {
-  console.log(req.params)
-  
   const response = await model.getOne(req.params.tutorialId)
   res.json({ response })
 }

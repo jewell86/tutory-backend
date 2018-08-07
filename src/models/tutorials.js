@@ -1,5 +1,6 @@
 const db = require('../../knex')
 const commentsModel = require('./comments')
+const ratingsModel = require('./ratings')
 
 //get all tutorials from db w/o comments
 function getAll() {
@@ -17,11 +18,12 @@ function getAll() {
 function getOne(id) {
   return db('tutorials')
     .where({ id }).first()
-    .then(tutorial => {
-      return commentsModel.getAll(id)
-        .then(comments => {
-          return { tutorial, comments }
-        })
+    .then(async tutorial => {
+      const comments = await commentsModel.getAll(id)
+      const rating = await ratingsModel.avgRating(id)
+      tutorial.avg_rating = rating.avg || 0
+      // console.log(ratings)
+      return { tutorial, comments }
     })
 }
 
