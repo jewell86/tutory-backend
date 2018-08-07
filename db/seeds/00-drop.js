@@ -1,4 +1,5 @@
-console.log('00-drop')
+console.log('Dropping tables if they exist')
+
 exports.seed = function(knex, Promise) {
   return knex('users').del()
     .then(() => knex('ratings').del())
@@ -9,6 +10,4 @@ exports.seed = function(knex, Promise) {
     .then(() => knex('tutorials_ratings').del())
     .then(() => console.log(`Done clearing tables`)
     )
-
-    // Promise.all([knex('users').del(), ])
 }

@@ -1,4 +1,5 @@
-console.log('07-comments')
+console.log('Seeding Comments')
+
 exports.seed = function(knex, Promise) {
   return knex('comments').insert([
     { id: 1, users_id: 1, tutorials_id: 1, content: 'asdfasdfasdfffasdfasdfasdfff 1 1 1 1 1' },
