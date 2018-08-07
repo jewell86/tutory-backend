@@ -19,6 +19,7 @@ function getOne(id) {
   return db('tutorials')
     .where({ id }).first()
     .then(async tutorial => {
+      if (!tutorial) return {}
       const comments = await commentsModel.getAll(id)
       const rating = await ratingsModel.avgRating(id)
       tutorial.avg_rating = rating ? rating.avg : null
@@ -54,7 +55,7 @@ function update(id, body) {
   })
 }
 
-//delete tutorial from db  
+//delete tutorial from db
 function destroy(id) {
   return db('tutorials')
     .where({ id })

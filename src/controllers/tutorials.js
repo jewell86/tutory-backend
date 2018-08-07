@@ -16,7 +16,7 @@ async function create(req, res, next) {
   try {
     const token = parseToken(req.headers.authorization)
     const userId = token.sub.id
-    const response = await model.create({ ...req.body, user_id: userId })
+    const response = await model.create({ ...req.body, users_id: userId })
     res.status(201).json({ response })
   } catch (e) {
     next({

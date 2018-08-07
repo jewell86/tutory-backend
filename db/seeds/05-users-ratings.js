@@ -1,4 +1,5 @@
-console.log('05-users-ratings')
+console.log('Seeding Users Ratings')
+
 exports.seed = function(knex, Promise) {
   return knex('users_ratings').insert([
     { id: 1, users_id: 1, ratings_id: 1 },
