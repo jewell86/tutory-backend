@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
+console.log('Seeding Users')
 
-console.log('01-users')
 exports.seed = function(knex, Promise) {
   return knex('users').insert([
     { id: 1, username: 'john', email: 'white@test.com', password: bcrypt.hashSync('bear', 8) },

@@ -1,4 +1,5 @@
-console.log('03-users-tutorials')
+console.log('Seeding Users Tutorials')
+
 exports.seed = function(knex, Promise) {
   return knex('users_tutorials').insert([
     { id: 1, users_id: 1, tutorials_id: 5 },
