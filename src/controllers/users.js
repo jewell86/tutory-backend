@@ -49,9 +49,11 @@ async function myProfile(req, res, next) { // why is this returning a token??
 async function update(req, res, next) {
   try {
     const userId = req.params.userId
-    const response = await model.update(userId)
-    const token = auth.createToken(response.id)
-    res.json({ token })
+    const body = req.body
+    const response = await model.update(userId, body)
+    // const token = auth.createToken(response.id)
+    // res.json({ token })
+    res.json({ response })
   } catch (e) {
     next({ status: 403, error: `Access forbidden` })
   }

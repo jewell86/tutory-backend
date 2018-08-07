@@ -50,18 +50,44 @@ async function myProfile (userId) {
 }
 
 //update personal user profile
-function update (userId, body) {
-  return myProfile(userId).then(response => {
-      return db('users')
-        .update({
-            ...response,
-            ...body,
-            updated_at: new Date()
-        })
-        .where({ id: userId })
-        .returning('*')
-        .then(([response]) => response)
-  })
+async function update (userId, body) {
+  try {
+    var user = await myProfile(userId)
+    // console.log(user)
+    await updateUser(user, body)
+    return await myProfile(userId)
+  } catch (e) {
+    throw new Error(e)
+  }
+}
+
+function updateUser (user, body) {
+  body = updateBodyObjectWithStaticUserInfo(user, body)
+  return db('users')
+    .where({ id: user.id })
+    .update('username', `${body.username}`)
+    .update('email', `${body.email}`)
+    .update('password', `${body.password}`)
+    .update('photo_url', `${body.photo_url}`)
+    .update('first_name', `${body.first_name}`)
+    .update('last_name', `${body.last_name}`)
+    .update('about_me', `${body.about_me}`)
+    .update('public', `${body.public}`)
+}
+
+function updateBodyObjectWithStaticUserInfo (user, body) {
+  if (!body.id) body["id"] = user.id
+  if (!body.username) body["username"] = user.username
+  if (!body.email) body["email"] = user.email
+  if (!body.password) body["password"] = user.password
+  if (!body.photo_url) body["photo_url"] = user.photo_url
+  if (!body.first_name) body["first_name"] = user.first_name
+  if (!body.last_name) body["last_name"] = user.last_name
+  if (!body.about_me) body["about_me"] = user.about_me
+  if (Object.keys(body).includes("public")) body["public"] = body.public
+  if (!body.created_at) body["created_at"] = user.created_at
+  body["updated_at"] = new Date()
+  return body
 }
 
 // #viewProfile methods
