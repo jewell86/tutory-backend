@@ -53,7 +53,7 @@ function update(id, body) {
   })
 }
 
-//delete tutorial from db  
+//delete tutorial from db
 function destroy(id) {
   return db('tutorials')
     .where({ id })

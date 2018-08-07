@@ -8,8 +8,6 @@ async function getAll(req, res, next) {
 }
 
 async function getOne(req, res, next) {
-  console.log(req.params)
-  
   const response = await model.getOne(req.params.tutorialId)
   res.json({ response })
 }
@@ -18,7 +16,7 @@ async function create(req, res, next) {
   try {
     const token = parseToken(req.headers.authorization)
     const userId = token.sub.id
-    const response = await model.create({ ...req.body, user_id: userId })
+    const response = await model.create({ ...req.body, users_id: userId })
     res.status(201).json({ response })
   } catch (e) {
     next({
