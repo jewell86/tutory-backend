@@ -60,6 +60,9 @@ async function update (userId, body) {
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// #update() methods
+////////////////////////////////////////////////////////////////////////////////
 function updateUser (user, body) {
   body = updateBodyObjectWithStaticUserInfo(user, body)
   return db('users')
@@ -86,21 +89,23 @@ function updateBodyObjectWithStaticUserInfo (user, body) {
   if (!body.created_at) body["created_at"] = user.created_at
   if (Object.keys(body).includes("public")) body["public"] = body.public
   body["updated_at"] = new Date()
-  
+
   return body
 }
 
-// #viewProfile methods
+////////////////////////////////////////////////////////////////////////////////
+// #viewProfile() methods
+////////////////////////////////////////////////////////////////////////////////
 function addUsersCreatedTutorials (user) {
   return db('tutorials')
-    .select('id', 'title', 'description', 'rating')
+    .select('id', 'title', 'description')
     .where({ users_id: user.id })
 }
 
 function addUsersTutorialsToUse (user) {
   return db('users_tutorials')
     .join('tutorials', 'tutorials.id', '=', 'users_tutorials.tutorials_id')
-    .select('users_tutorials.id', 'tutorials.users_id', 'tutorials.title', 'tutorials.description', 'tutorials.rating')
+    .select('users_tutorials.id', 'tutorials.users_id', 'tutorials.title', 'tutorials.description')
     .where('users_tutorials.users_id', user.id)
 }
 
