@@ -21,7 +21,7 @@ async function login(req, res, next) {
   }
 }
 
-//view another user's profile
+// View another's profile
 async function viewProfile(req, res, next) {
   try {
     const userId = req.params.userId
@@ -32,25 +32,28 @@ async function viewProfile(req, res, next) {
   }
 }
 
-//view personal profile
+// View my profile
 async function myProfile(req, res, next) {
   try {
     const userId = req.params.userId
     const response = await model.myProfile(userId)
-    const token = auth.createToken(response.id)
-    res.json({ token })
+    // const token = auth.createToken(response.id)
+    // res.json({ token })
+    res.json({ response })
   } catch (e) {
     next({ status: 403, error: `Access forbidden` })
   }
 }
 
-//update personal profile
+// Update my info
 async function update(req, res, next) {
   try {
     const userId = req.params.userId
-    const response = await model.update(userId)
-    const token = auth.createToken(response.id)
-    res.json({ token })
+    const body = req.body
+    const response = await model.update(userId, body)
+    // const token = auth.createToken(response.id)
+    // res.json({ token })
+    res.json({ response })
   } catch (e) {
     next({ status: 403, error: `Access forbidden` })
   }
