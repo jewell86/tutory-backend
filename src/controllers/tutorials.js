@@ -8,7 +8,7 @@ async function getAll (req, res, next) {
 }
 
 async function getOne (req, res, next) {
-    const response = await model.getOne()
+    const response = await model.getOne(req.params.tutorialId)
     res.json({ response })
 }
 

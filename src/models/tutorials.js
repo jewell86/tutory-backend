@@ -1,37 +1,37 @@
 const db = require('../../knex')
-// const commentsModel = require('./comments')
+const commentsModel = require('./comments')
 
 //get all tutorials from db w/o comments
-function getAll () {
+function getAll() {
   return db('tutorials')
 }
 
 //get all comments for specific tutorial
-function getComments(id) {
-  return db('comments')
-    .where({ tutorial_id: id })
-    .then(([ response ]) => response)
-}
+// function getComments(id) {
+//   return db('comments')
+//     .where({ tutorial_id: id })
+//     .then(([response]) => response)
+// }
 
 //get single tutorial from db w/ comments
-function getOne (id) {
+function getOne(id) {
   return db('tutorials')
     .where({ id }).first()
     .then(tutorial => {
-      return getComments(id)
+      return commentsModel.getAll(id)
         .then(comments => {
-          return{ tutorial, comments }
+          return { tutorial, comments }
         })
     })
 }
 
 //find one tutorial w/o comments
-function find (id) {
+function find(id) {
   return db('tutorials').where({ id }).first()
 }
 
 //create tutorial in db
-function create (body) {
+function create(body) {
   return db('tutorials')
     .insert(body)
     .returning('*')
@@ -39,22 +39,22 @@ function create (body) {
 }
 
 //update tutorial in db
-function update (id, body) {
+function update(id, body) {
   return find(id).then(response => {
-      return db('tutorials')
-        .update({
-          ...response,
-          ...body,
-          updated_at: new Date()
-        })
-        .where({ id })
-        .returning('*')
-        .then(([response]) => response)
-    })
-  }
+    return db('tutorials')
+      .update({
+        ...response,
+        ...body,
+        updated_at: new Date()
+      })
+      .where({ id })
+      .returning('*')
+      .then(([response]) => response)
+  })
+}
 
 //delete tutorial from db  
-function destroy (id) {
+function destroy(id) {
   return db('tutorials')
     .where({ id })
     .del()
@@ -63,7 +63,7 @@ function destroy (id) {
 }
 
 //get individual user's added tutorials from db
-function getMyTutorials (userId) {
+function getMyTutorials(userId) {
   return db('usersTutorials')
     .where({ user_id: userId })
     .join('tutorials', 'tutorials.id', 'usersTutorials.tutorial_id')
@@ -71,12 +71,12 @@ function getMyTutorials (userId) {
 }
 
 //get individual user's created tutorials from db
-function getMyCreatedTutorials (userId) {
+function getMyCreatedTutorials(userId) {
   return db('tutorials')
-    .where({ created_by_id: userId})
+    .where({ created_by_id: userId })
     .then(([response]) => response)
 }
 
 module.exports = {
-    getAll, getComments, getOne, find, create, update, destroy, getMyTutorials, getMyCreatedTutorials
+  getAll, getOne, find, create, update, destroy, getMyTutorials, getMyCreatedTutorials
 }
