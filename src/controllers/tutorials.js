@@ -2,17 +2,19 @@ const model = require('../models/tutorials')
 const { parseToken } = require('../lib/auth')
 
 //populate all tutorials on main page - no auth
-async function getAll (req, res, next) {
-    const response = await model.getAll()
-    res.json({ response })
+async function getAll(req, res, next) {
+  const response = await model.getAll()
+  res.json({ response })
 }
 
-async function getOne (req, res, next) {
-    const response = await model.getOne(req.params.tutorialId)
-    res.json({ response })
+async function getOne(req, res, next) {
+  console.log(req.params)
+  
+  const response = await model.getOne(req.params.tutorialId)
+  res.json({ response })
 }
 
-async function create (req, res, next) {
+async function create(req, res, next) {
   try {
     const token = parseToken(req.headers.authorization)
     const userId = token.sub.id
@@ -26,30 +28,30 @@ async function create (req, res, next) {
   }
 }
 
-async function update (req, res, next) {
-    const id = req.params.tutorialId
-    const response = await model.update(id, req.body)
-    res.json({ response })
+async function update(req, res, next) {
+  const id = req.params.tutorialId
+  const response = await model.update(id, req.body)
+  res.json({ response })
 }
 
-async function destroy (req, res, next) {
+async function destroy(req, res, next) {
   const id = req.params.tutorialId
   const response = await model.destroy(id)
   res.json({ response })
 }
 
-async function getMyTutorials (req, res, next) {
-    const token = parseToken(req.headers.authorization)
-    const userId = token.sub.id
-    const response = await model.getMyTutorials(userId)
-    res.json({ response })
+async function getMyTutorials(req, res, next) {
+  const token = parseToken(req.headers.authorization)
+  const userId = token.sub.id
+  const response = await model.getMyTutorials(userId)
+  res.json({ response })
 }
 
-async function getMyCreatedTutorials (req, res, next) {
-    const token = parseToken(req.headers.authorization)
-    const userId = token.sub.id
-    const response = await model.getMyCreatedTutorials(userId)
-    res.json({ response })
+async function getMyCreatedTutorials(req, res, next) {
+  const token = parseToken(req.headers.authorization)
+  const userId = token.sub.id
+  const response = await model.getMyCreatedTutorials(userId)
+  res.json({ response })
 }
 
 module.exports = {
