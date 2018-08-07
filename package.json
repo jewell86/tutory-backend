@@ -14,7 +14,7 @@
     "seed": "knex seed:run",
     "dev": "run-all \"npm run dev-server\" \"npm run lint-watch\"",
     "test": "NODE_ENV=testing mocha --recursive",
-    "start": "node src/app.js"
+    "start": "nodemon src/app.js"
   },
   "author": "Nate Semmler, Branden Lowe, Jewell White",
   "license": "ISC",
