@@ -16,6 +16,8 @@ app.use('/users-tutorials', require('./routes/users-tutorials'))
 app.use('/tutorials/:tutorialId/comments', require('./routes/comments'))
 app.use('/tutorials/:tutorialId/ratings', require('./routes/ratings'))
 app.use('/search', require('./routes/search'))
+app.use('/tutorials/:tutorialId/content', require('./routes/contents'))
+
 
 //Users, tutorials, user's added/saved tutorials (many-to-many), comments/reviews, teacher questions
 
