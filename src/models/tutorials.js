@@ -81,9 +81,9 @@ function destroy(id) {
 
 //get individual user's added tutorials from db
 function getMyTutorials(userId) {
-  return db('usersTutorials')
-    .where({ user_id: userId })
-    .join('tutorials', 'tutorials.id', 'usersTutorials.tutorial_id')
+  return db('users_tutorials')
+    .where({ 'users_tutorials.users_id' : userId })
+    .join('tutorials', 'tutorials.id', 'users_tutorials.tutorials_id')
     .then(([response]) => response)
 }
 

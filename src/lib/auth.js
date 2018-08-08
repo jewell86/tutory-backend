@@ -33,8 +33,8 @@ async function isAuthorized (req, res, next) {
       return next({ status: 401, error: message })
     }
 
-    const token = parseToken(authorization)
-    const userId = token.sub.id
+    // const token = parseToken(authorization)
+    // const userId = token.sub.id
 
     //enter code to authorize users to view their 'my tutorials' page
     // const myTutorials = req.params.myTutorialsId || req.params.mytutorialsid
