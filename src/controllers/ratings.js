@@ -7,17 +7,18 @@ async function create(req, res, next) {
     const { tutorialId } = req.params
     const { rating } = req.body
 
-    const response = await model.create(rating)
+    // throw custom error if write to     
+    const response = await model.create(rating).catch(() => {
+      throw new Error('Ratings failed')
+    })
     const ratingId = response.id
 
-    // HOW DO I TIE MESSAGE IN ERROR TO WHAT DISPLAYS IN CATCH BLOCK???
-    if (!ratingId) throw Error()
     await model.updateUsersRatings(userId, ratingId)
     await model.updateTutorialsRatings(tutorialId, ratingId)
     res.status(201).json({ response })
 
   } catch (e) {
-    // console.error(`${e}`)
+    console.error(Object.keys(e), e.detail)
     next({
       status: 400,
       error: String(e) || 'Could not create rating'
