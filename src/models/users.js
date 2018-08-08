@@ -4,6 +4,10 @@ const bcrypt = require('bcryptjs')
 
 // User Signup
 async function create ({ password, ...body }) {
+  console.log(password)
+  console.log(body)
+  
+  
     const hashed = await promisify(bcrypt.hash)(password, 8)
     return db('users')
         .insert({ ...body, password: hashed })
