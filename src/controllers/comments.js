@@ -1,10 +1,6 @@
 const model = require('../models/comments')
 const { parseToken } = require('../lib/auth')
 
-// function getAll() {
-//   return 1
-// }
-
 async function create(req, res, next) {
   try {
     const token = parseToken(req.headers.authorization)
@@ -12,18 +8,15 @@ async function create(req, res, next) {
     const tutorialId = req.params.tutorialId
 
     const response = await model.create({ ...req.body, userId, tutorialId })
-    console.log(response)
     res.status(201).json({ response })
 
   } catch (e) {
     console.error(e)
-    next({ status: 400, message: 'Comment could not be created' })
-
+    next({ status: 400, error: 'Comment could not be created' })
   }
 
 }
 
 module.exports = {
-  // getAll,
   create
 }

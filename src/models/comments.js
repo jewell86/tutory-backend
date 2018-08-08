@@ -1,12 +1,15 @@
 const db = require('../../knex')
 
 function getAll(tutorialId) {
+  const selectArr = ['content', 'comments.created_at']
   return db('comments')
+    .select(selectArr)
     .where({ tutorials_id: tutorialId })
-    // .then(([response]) => response)
+    // .then(comments => comments.map(commentObj => commentObj.content))
+
 }
 
-function create({userId, tutorialId, content}) {
+function create({ userId, tutorialId, content }) {
   const commentObj = {
     users_id: userId,
     tutorials_id: tutorialId,

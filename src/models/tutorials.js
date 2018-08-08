@@ -1,17 +1,11 @@
 const db = require('../../knex')
 const commentsModel = require('./comments')
+const ratingsModel = require('./ratings')
 
 //get all tutorials from db w/o comments
 function getAll() {
   return db('tutorials')
 }
-
-//get all comments for specific tutorial
-// function getComments(id) {
-//   return db('comments')
-//     .where({ tutorial_id: id })
-//     .then(([response]) => response)
-// }
 
 //get single tutorial from db w/ comments
 function getOne(id) {
@@ -20,20 +14,21 @@ function getOne(id) {
     .where({ id }).first()
     .then(async tutorial => {
       try {
+        if (!tutorial) return {}
+        const comments = await commentsModel.getAll(id)
+        const rating = await ratingsModel.avgRating(id)
+        tutorial.avg_rating = rating ? rating.avg : null
         var urls = await db('contents').select('url').where('contents.tutorials_id', id)
         urls = urls.map(urlObj => urlObj = urlObj.url)
         tutorial["urls"] = urls
-        return commentsModel.getAll(id)
-          .then(comments => {
-            return { tutorial, comments }
-          })
+        return { tutorial, comments }
       } catch (e) {
         throw new Error(e)
       }
     })
 }
 
-async function addURLsToTutorials (tutorial, id) {
+async function addURLsToTutorials(tutorial, id) {
   try {
     var urls = await db('contents').select('url').where('contents.tutorials_id', id)
     urls = urls.map(urlObj => urlObj = urlObj.url)
