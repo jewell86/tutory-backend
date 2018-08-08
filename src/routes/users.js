@@ -13,7 +13,7 @@ router.get('/:userId/myProfile', auth.isAuthorized, ctrl.myProfile) //view/edit 
 
 router.patch('/:userId/myProfile', auth.isAuthorized, ctrl.update)//update personal profile
 
-router.get('/:userId/myTutorials', auth.isAuthorized, tutorialsCtrl.getMyTutorials) //my tutorials page
+router.get('/:userId/myTutorials', tutorialsCtrl.getMyTutorials) //my tutorials page
 
 router.get('/:userId/myCreatedTutorials', auth.isAuthorized, tutorialsCtrl.getMyCreatedTutorials) //create a tutorial page
 
