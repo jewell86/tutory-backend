@@ -12,6 +12,7 @@ app.use(require('cors')())
 
 app.use('/users', require('./routes/users'))
 app.use('/tutorials', require('./routes/tutorials'))
+app.use('/users-tutorials', require('./routes/users-tutorials'))
 app.use('/tutorials/:tutorialId/comments', require('./routes/comments'))
 app.use('/tutorials/:tutorialId/ratings', require('./routes/ratings'))
 app.use('/tutorials/:tutorialId/content', require('./routes/contents'))
