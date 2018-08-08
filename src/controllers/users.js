@@ -4,8 +4,9 @@ const auth = require('../lib/auth')
 async function signup(req, res, next) {
   try {
     const response = await model.create(req.body)
-    const token = auth.createToken(response.id)
-    res.status(201).json({ token })
+    const userId = response.id
+    const token = auth.createToken(userId)
+    res.status(201).json({ token: token, user_id: userId })
   } catch (e) {
     next({ status: 400, error: `User could not be registered` })
   }
@@ -14,8 +15,9 @@ async function signup(req, res, next) {
 async function login(req, res, next) {
   try {
     const response = await model.login(req.body)
-    const token = auth.createToken(response.id)
-    res.json({ token })
+    const userId = response.id
+    const token = auth.createToken(userId)
+    res.json({ token: token, user_id: userId })
   } catch (e) {
     next({ status: 401, error: `Email or password is incorrect` })
   }
