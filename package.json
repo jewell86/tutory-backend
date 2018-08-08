@@ -13,7 +13,7 @@
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "test": "NODE_ENV=testing mocha --recursive",
-    "start": "nodemon src/app.js"
+    "start": "node src/app.js"
   },
   "author": "Nate Semmler, Branden Lowe, Jewell White",
   "license": "ISC",
