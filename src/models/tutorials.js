@@ -84,14 +84,12 @@ function getMyTutorials(userId) {
   return db('users_tutorials')
     .where({ 'users_tutorials.users_id' : userId })
     .join('tutorials', 'tutorials.id', 'users_tutorials.tutorials_id')
-    // .then(([response]) => response)
 }
 
 //get individual user's created tutorials from db
 function getMyCreatedTutorials(userId) {
   return db('tutorials')
-    .where({ created_by_id: userId })
-    .then(([response]) => response)
+    .where({ users_id: userId })
 }
 
 module.exports = {

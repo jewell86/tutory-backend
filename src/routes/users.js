@@ -20,5 +20,4 @@ router.get('/:userId/myCreatedTutorials', auth.isAuthorized, tutorialsCtrl.getMy
 
 
 
-
 module.exports = router
