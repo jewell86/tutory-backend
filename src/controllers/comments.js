@@ -8,7 +8,6 @@ async function create(req, res, next) {
     const tutorialId = req.params.tutorialId
 
     const response = await model.create({ ...req.body, userId, tutorialId })
-    console.log(response)
     res.status(201).json({ response })
 
   } catch (e) {
@@ -19,6 +18,5 @@ async function create(req, res, next) {
 }
 
 module.exports = {
-  // getAll,
   create
 }
