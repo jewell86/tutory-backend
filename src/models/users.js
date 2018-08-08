@@ -3,32 +3,32 @@ const db = require('../../knex')
 const bcrypt = require('bcryptjs')
 
 // User Signup
-async function create ({ password, ...body }) {
+async function create({ password, ...body }) {
   console.log(password)
   console.log(body)
-  
-  
-    const hashed = await promisify(bcrypt.hash)(password, 8)
-    return db('users')
-        .insert({ ...body, password: hashed })
-        .returning('*')
-        .then(([response]) => response)
+
+
+  const hashed = await promisify(bcrypt.hash)(password, 8)
+  return db('users')
+    .insert({ ...body, password: hashed })
+    .returning('*')
+    .then(([response]) => response)
 }
 
 // User Login
-function login ({ username, password }) {
+function login({ username, password }) {
   return db('users')
     .where({ username })
-    .then(async ([ user ]) => {
-        if (!user) throw new Error()
-        const isValid = await promisify(bcrypt.compare)(password, user.password)
-        if (!isValid) throw new Error()
-        return user
+    .then(async ([user]) => {
+      if (!user) throw new Error()
+      const isValid = await promisify(bcrypt.compare)(password, user.password)
+      if (!isValid) throw new Error()
+      return user
     })
 }
 
 // View another's profile
-async function viewProfile (userId) {
+async function viewProfile(userId) {
   try {
     var [user] = await getUserById(userId)
     if (user.public) {
@@ -42,7 +42,7 @@ async function viewProfile (userId) {
 }
 
 // View my profile
-async function myProfile (userId) {
+async function myProfile(userId) {
   try {
     var [user] = await getUserById(userId)
     user["myTutorials"] = await addUsersCreatedTutorials(user)
@@ -54,7 +54,7 @@ async function myProfile (userId) {
 }
 
 // Update my info
-async function update (userId, body) {
+async function update(userId, body) {
   try {
     var user = await myProfile(userId)
     await updateUser(user, body)
@@ -67,7 +67,7 @@ async function update (userId, body) {
 ////////////////////////////////////////////////////////////////////////////////
 // #update() methods
 ////////////////////////////////////////////////////////////////////////////////
-function updateUser (user, body) {
+function updateUser(user, body) {
   body = updateBodyObjectWithStaticUserInfo(user, body)
   return db('users')
     .where({ id: user.id })
@@ -81,7 +81,7 @@ function updateUser (user, body) {
     .update('public', `${body.public}`)
 }
 
-function updateBodyObjectWithStaticUserInfo (user, body) {
+function updateBodyObjectWithStaticUserInfo(user, body) {
   if (!body.id) body["id"] = user.id
   if (!body.username) body["username"] = user.username
   if (!body.email) body["email"] = user.email
@@ -100,20 +100,20 @@ function updateBodyObjectWithStaticUserInfo (user, body) {
 ////////////////////////////////////////////////////////////////////////////////
 // #viewProfile() methods
 ////////////////////////////////////////////////////////////////////////////////
-function addUsersCreatedTutorials (user) {
+function addUsersCreatedTutorials(user) {
   return db('tutorials')
     .select('id', 'title', 'description')
     .where({ users_id: user.id })
 }
 
-function addUsersTutorialsToUse (user) {
+function addUsersTutorialsToUse(user) {
   return db('users_tutorials')
     .join('tutorials', 'tutorials.id', '=', 'users_tutorials.tutorials_id')
     .select('users_tutorials.id', 'tutorials.users_id', 'tutorials.title', 'tutorials.description')
     .where('users_tutorials.users_id', user.id)
 }
 
-function getUserById (id) {
+function getUserById(id) {
   return db('users').where({ id })
 }
 
