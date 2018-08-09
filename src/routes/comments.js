@@ -5,4 +5,4 @@ const auth = require('../lib/auth')
 // router.get('/', ctrl.getAll)
 router.post('/', auth.isLoggedIn, ctrl.create)
 
-module.exports = router
+module.exports = router 

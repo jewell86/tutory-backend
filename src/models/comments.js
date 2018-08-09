@@ -1,7 +1,7 @@
 const db = require('../../knex')
 
 function getAll(tutorialId) {
-  const selectArr = ['content', 'comments.created_at']
+  const selectArr = ['users_id', 'content', 'comments.created_at']
   return db('comments')
     .select(selectArr)
     .where({ tutorials_id: tutorialId })
