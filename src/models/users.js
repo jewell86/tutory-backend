@@ -102,7 +102,7 @@ function updateBodyObjectWithStaticUserInfo(user, body) {
 ////////////////////////////////////////////////////////////////////////////////
 function addUsersCreatedTutorials(user) {
   return db('tutorials')
-    .select('id', 'title', 'description')
+    .select('id', 'title', 'description', 'img')
     .where({ users_id: user.id })
 }
 
